@@ -15,7 +15,7 @@ function Header({ countries }) {
       <h1>COVID 19 TRACKER</h1>
       <FormControl>
         <Select variant="outlined" value={country} onChange={onCountryChange}>
-          <MenuItem value="worldwide">Worldwide</MenuItem>
+          <MenuItem value="worldwide">Whorldwide</MenuItem>
           {countries.map((country) => (
             <MenuItem value={country.name}>{country.name}</MenuItem>
           ))}
