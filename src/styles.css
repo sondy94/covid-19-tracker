@@ -16,8 +16,9 @@ body {
 .app_left {
   flex: 0.9;
 }
-@media (max-width: 990px) {
-  .app {
+@media screen and (max-width: 990px) {
+  .App {
+    display: flex;
     flex-direction: column;
   }
 }
