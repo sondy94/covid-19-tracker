@@ -4,11 +4,14 @@ import Header from "./components/Header";
 import InfoBox from "./components/InfoBox";
 import Map from "./components/Map";
 import { Card, CardContent } from "@material-ui/core";
+import Table from "./components/Table";
+import { sortData } from "./utilities";
 
 export default function App() {
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState("worldwide");
   const [countryInfo, setCountryInfo] = useState({});
+  const [tableData, setTableData] = useState([]);
   const onCountryChange = (event) => {
     const countryCode = event.target.value;
 
@@ -43,6 +46,8 @@ export default function App() {
             value: country.countryInfo.iso2
           }));
 
+          const sortedData = sortData(data);
+          setTableData(sortedData);
           setCountries(countries);
         });
     };
@@ -84,6 +89,7 @@ export default function App() {
         <Card>
           <CardContent>
             <h2>Live cases by country</h2>
+            <Table countries={tableData} />
             <h2>Worldwide new cases</h2>
           </CardContent>
         </Card>
