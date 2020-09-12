@@ -1,6 +1,7 @@
 .app_header {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   align-items: center;
-  margin: 0;
+  margin: 20px;
 }

@@ -7,6 +7,31 @@ import { Card, CardContent } from "@material-ui/core";
 
 export default function App() {
   const [countries, setCountries] = useState([]);
+  const [country, setCountry] = useState("worldwide");
+  const [countryInfo, setCountryInfo] = useState({});
+  const onCountryChange = (event) => {
+    const countryCode = event.target.value;
+
+    const url =
+      countryCode === "worldwide"
+        ? "https://disease.sh/v3/covid-19/all"
+        : `https://disease.sh/v3/covid-19/countries/${countryCode}`;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        setCountry(countryCode);
+        setCountryInfo(data);
+      });
+  };
+
+  useEffect(() => {
+    fetch("https://disease.sh/v3/covid-19/all")
+      .then((response) => response.json())
+      .then((data) => {
+        setCountryInfo(data);
+      });
+  }, []);
 
   useEffect(() => {
     const getCountriesData = async () => {
@@ -27,12 +52,30 @@ export default function App() {
   return (
     <div className="App">
       <div className="app_left">
-        <Header countries={countries} />
+        <Header
+          countries={countries}
+          country={country}
+          onCountryChange={onCountryChange}
+        />
 
         <div className="app_stats">
-          <InfoBox title="Corona Cases" cases={123} total={2000} />
-          <InfoBox title="Recovered" cases={123} total={2000} />
-          <InfoBox title="Deaths" cases={12377} total={2000} />
+          <InfoBox
+            title="Corona Cases"
+            cases={countryInfo.todayCases}
+            total={countryInfo.cases}
+          />
+
+          <InfoBox
+            title="Recovered"
+            cases={countryInfo.todayRecovered}
+            total={countryInfo.recovered}
+          />
+
+          <InfoBox
+            title="Deaths"
+            cases={countryInfo.todayDeaths}
+            total={countryInfo.deaths}
+          />
         </div>
         <Map />
       </div>
